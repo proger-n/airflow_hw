@@ -12,6 +12,8 @@ os.environ['PROJECT_PATH'] = path
 sys.path.insert(0, path)
 
 from modules.pipeline import pipeline
+from modules.predict import predict
+
 # <YOUR_IMPORTS>
 
 args = {
@@ -32,4 +34,10 @@ with DAG(
         python_callable=pipeline,
     )
     # <YOUR_CODE>
+    predict = PythonOperator(
+        task_id='predict',
+        python_callable=predict,
+        # dag=dag,
+    )
 
+    pipeline >> predict
